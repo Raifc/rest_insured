@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  api-rest:
+    container_name: api_rest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_URL=sqlite3:/db.sqlite3
+      - RABBITMQ_URL=amqp://rabbitmq
+    volumes:
+      - .:/app
+    networks:
+      - mynetwork
+
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    external: true
+    name: insured_ql_mynetwork
