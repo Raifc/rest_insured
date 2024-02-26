@@ -38,6 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_200607) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "policies", "insured_people"
+  add_foreign_key "policies", "insured_persons"
   add_foreign_key "policies", "vehicles"
 end
