@@ -27,6 +27,18 @@ services:
     networks:
       - mynetwork
 
+  sneakers:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: ["bundle", "exec", "sneakers", "work", "PolicyWorker", "--require", "app/workers/policy_worker.rb"]
+    volumes:
+      - .:/app
+    networks:
+      - mynetwork
+
 networks:
   mynetwork:
     external: true
