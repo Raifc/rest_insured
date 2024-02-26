@@ -1,6 +1,6 @@
 class Policy < ApplicationRecord
   belongs_to :vehicle
-  belongs_to :insured_person
+  belongs_to :customer
 
-  accepts_nested_attributes_for :insured_person, :vehicle
+  accepts_nested_attributes_for :customer, :vehicle
 end
