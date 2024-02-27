@@ -8,19 +8,23 @@ class PolicyWorker
 
   def work(msg)
     begin
+      puts '======= Creating Policy ======='
       payload = JSON.parse msg
-      vehicle_data = payload['vehicle']
-      insured_person_data = payload['insured_person']
+      vehicle = Vehicle.create!(payload['vehicle'])
+      customer = Customer.create!(payload['customer'])
 
       policy = Policy.create!(
         effective_from: Date.parse(payload['effective_from']),
         effective_until: Date.parse(payload['effective_until']),
-        vehicle: vehicle_data,
-        insured_person: insured_person_data
+        customer: customer,
+        vehicle: vehicle,
       )
+
+      puts "Policy created: #{policy.inspect}"
 
       ack!
     rescue StandardError => e
+      puts "Error creating policy #{e.inspect}"
       reject!
     end
   end
