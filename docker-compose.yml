@@ -10,10 +10,12 @@ services:
       - "3000:3000"
     depends_on:
       - rabbitmq
+      - postgres
     environment:
       - RAILS_ENV=development
-      - DATABASE_URL=sqlite3:/db.sqlite3
-      - RABBITMQ_URL=amqp://rabbitmq
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST=postgres
     volumes:
       - .:/app
     networks:
@@ -27,15 +29,13 @@ services:
     networks:
       - mynetwork
 
-  sneakers:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - rabbitmq
-    command: ["bundle", "exec", "sneakers", "work", "PolicyWorker", "--require", "app/workers/policy_worker.rb"]
-    volumes:
-      - .:/app
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
     networks:
       - mynetwork
 

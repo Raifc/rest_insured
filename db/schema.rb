@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_22_200607) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_215953) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "document_number"
@@ -21,8 +24,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_200607) do
   create_table "policies", force: :cascade do |t|
     t.date "effective_from"
     t.date "effective_until"
-    t.integer "vehicle_id", null: false
-    t.integer "customer_id", null: false
+    t.bigint "vehicle_id", null: false
+    t.bigint "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_policies_on_customer_id"
