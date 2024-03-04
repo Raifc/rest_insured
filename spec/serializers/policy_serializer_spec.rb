@@ -28,6 +28,7 @@ RSpec.describe PolicySerializer do
           plate: 'ABC1234'
         }
       }
+      
       expect(serializer.attributes).to eq(expected_result)
     end
   end

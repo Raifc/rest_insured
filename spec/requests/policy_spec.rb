@@ -9,21 +9,21 @@ RSpec.describe 'Policies API', type: :request do
     let(:customer) { create(:customer) }
 
     context 'when the policy exists' do
+      let(:expected_response) do
+        { 'policy_id' => 1,
+          'effective_from' => '2022-02-03',
+          'effective_until' => '2024-02-03',
+          'customer' => { 'name' => 'John Doe', 'cpf' => '123456789' },
+          'vehicle' => { 'make' => 'Toyota', 'model' => 'Corolla', 'year' => '2022', 'plate' => 'ABC1234' } }
+      end
       it 'returns the policy details' do
         get "/policies/#{policy.id}"
 
         expect(response).to have_http_status(:success)
 
         json_response = JSON.parse(response.body)
-        expect(json_response['policy_id']).to eq(policy.id)
-        expect(json_response['effective_from']).to eq(policy.effective_from.to_s)
-        expect(json_response['effective_until']).to eq(policy.effective_until.to_s)
-        expect(json_response['customer']['name']).to eq(customer.name)
-        expect(json_response['customer']['cpf']).to eq(customer.document_number)
-        expect(json_response['vehicle']['make']).to eq(vehicle.make)
-        expect(json_response['vehicle']['model']).to eq(vehicle.model)
-        expect(json_response['vehicle']['year']).to eq(vehicle.year)
-        expect(json_response['vehicle']['plate']).to eq(vehicle.plate)
+        
+        expect(json_response).to eq(expected_response)
       end
     end
 
