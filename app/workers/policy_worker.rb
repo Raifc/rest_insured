@@ -21,8 +21,8 @@ class PolicyWorker
 
   def create_policy(payload)
     ActiveRecord::Base.connection_pool.with_connection do
-      vehicle = create_vehicle(payload['vehicle'])
-      customer = create_customer(payload['customer'])
+      vehicle = Vehicle.create!(payload['vehicle'])
+      customer = Customer.create!(payload['customer'])
       policy = Policy.create!(
         effective_from: Date.parse(payload['effective_from']),
         effective_until: Date.parse(payload['effective_until']),
@@ -32,13 +32,5 @@ class PolicyWorker
       puts "Policy created: #{policy.inspect}"
       ack!
     end
-  end
-
-  def create_vehicle(vehicle_params)
-    Vehicle.create!(vehicle_params)
-  end
-
-  def create_customer(customer_params)
-    Customer.create!(customer_params)
   end
 end
