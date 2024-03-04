@@ -12,6 +12,7 @@ RSpec.describe Vehicle, type: :model do
   it 'is invalid without required attributes' do
     vehicle = Vehicle.create
 
+    expect(vehicle).not_to be_valid
     expect(vehicle.errors.full_messages).to include(
       "Plate can't be blank",
       "Make can't be blank",

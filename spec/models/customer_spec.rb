@@ -11,6 +11,8 @@ RSpec.describe Customer, type: :model do
 
   it 'is invalid without required attributes' do
     customer = Customer.create
+
+    expect(customer).not_to be_valid
     expect(customer.errors.full_messages).to include(
       "Name can't be blank",
       "Document number can't be blank"
