@@ -22,7 +22,7 @@ RSpec.describe 'Policies API', type: :request do
         expect(response).to have_http_status(:success)
 
         json_response = JSON.parse(response.body)
-        
+
         expect(json_response).to eq(expected_response)
       end
     end
